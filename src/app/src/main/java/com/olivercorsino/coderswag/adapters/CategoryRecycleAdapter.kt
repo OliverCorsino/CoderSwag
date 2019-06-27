@@ -10,7 +10,8 @@ import android.widget.TextView
 import com.olivercorsino.coderswag.R
 import com.olivercorsino.coderswag.models.Category
 
-class CategoryRecycleAdapter(val context: Context, val categories: List<Category>) : RecyclerView.Adapter<CategoryRecycleAdapter.Holder>()  {
+class CategoryRecycleAdapter(private val context: Context, private val categories: List<Category>, val itemClick: (Category) -> Unit)
+        : RecyclerView.Adapter<CategoryRecycleAdapter.Holder>()  {
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.bindCategory(categories[position], context)
@@ -24,13 +25,13 @@ class CategoryRecycleAdapter(val context: Context, val categories: List<Category
         val view = LayoutInflater.from(context)
             .inflate(R.layout.category_list_item, parent, false)
 
-        return Holder(view)
+        return Holder(view, itemClick)
     }
 
 
 
 
-    inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class Holder(itemView: View, val itemClick: (Category) -> Unit) : RecyclerView.ViewHolder(itemView) {
 
         val categoryImage = itemView.findViewById<ImageView>(R.id.categoryImage)
         val categoryName = itemView.findViewById<TextView>(R.id.categoryName)
@@ -40,6 +41,8 @@ class CategoryRecycleAdapter(val context: Context, val categories: List<Category
 
             categoryImage?.setImageResource(resourceId)
             categoryName?.text = category.name
+
+            itemView.setOnClickListener { itemClick(category) }
         }
     }
 }
