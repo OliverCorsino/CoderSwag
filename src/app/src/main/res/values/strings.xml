@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CoderSwag</string>
+    <string name="listview_backgroudn_image">listview backgroudn image</string>
+    <string name="categories">Categories</string>
 </resources>
